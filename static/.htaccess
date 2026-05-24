@@ -1,0 +1,23 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Redirect HTTP ke HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # 2. Jika request adalah file asli (seperti .js, .css, gambar, dll), langsung layani
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+
+  # 3. Layani URL tanpa ekstensi .html (Clean URLs)
+  # Ini mengatasi error 403 Forbidden ketika folder dan file .html memiliki nama yang sama (misal: folder /projects/ dan file /projects.html)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+
+  # 4. Fallback ke 404.html jika halaman tidak ditemukan (untuk client-side routing SvelteKit)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /404.html [L]
+</IfModule>
