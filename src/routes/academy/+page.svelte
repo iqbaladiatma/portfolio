@@ -984,14 +984,14 @@
     transform: scale(1.04);
   }
 
-  .project-placeholder {
+  :global(.project-placeholder) {
     width: 100%;
     height: 100%;
     background: linear-gradient(135deg, color-mix(in srgb, var(--c) 12%, var(--bg-secondary)), color-mix(in srgb, var(--c) 4%, var(--bg-secondary)));
     position: relative;
   }
 
-  .project-placeholder::after {
+  :global(.project-placeholder::after) {
     content: '';
     position: absolute;
     inset: 0;

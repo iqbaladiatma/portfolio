@@ -94,10 +94,10 @@
     transition: opacity 150ms ease, width 200ms ease, height 200ms ease, border-color 200ms ease;
   }
 
-  .cursor-dot.clicking { width: 5px; height: 5px; }
+  :global(.cursor-dot.clicking) { width: 5px; height: 5px; }
 
-  .cursor-ring.hovering { width: 52px; height: 52px; opacity: 0.5 !important; }
-  .cursor-ring.clicking { width: 30px; height: 30px; }
+  :global(.cursor-ring.hovering) { width: 52px; height: 52px; opacity: 0.5 !important; }
+  :global(.cursor-ring.clicking) { width: 30px; height: 30px; }
 
   :global(.cursor-ring) { opacity: 0.35; }
 

@@ -4,7 +4,8 @@
   import type { PageData } from './$types';
 
   let { data }: { data: PageData } = $props();
-  const { course, totalDuration } = data;
+  const course = $derived(data.course);
+  const totalDuration = $derived(data.totalDuration);
 
   let openChapter = $state<number | null>(null);
 </script>

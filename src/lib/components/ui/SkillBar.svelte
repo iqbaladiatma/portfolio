@@ -20,7 +20,7 @@
     'General': 'var(--accent-color)'
   };
 
-  const color = categoryColors[category] || 'var(--accent-color)';
+  const color = $derived(categoryColors[category] || 'var(--accent-color)');
 
   // Determine visual level tag
   const getLevelLabel = (lvl: number) => {

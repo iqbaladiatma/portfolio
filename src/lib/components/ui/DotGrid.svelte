@@ -8,8 +8,8 @@
   }
   let { cols = 12, rows = 8, size = 1.5, gap = 24, opacity = 0.35 }: Props = $props();
 
-  const w = cols * gap;
-  const h = rows * gap;
+  const w = $derived(cols * gap);
+  const h = $derived(rows * gap);
   // ID unik agar pattern tidak konflik kalau ada beberapa DotGrid
   const id = `dg-${Math.random().toString(36).slice(2, 7)}`;
 </script>

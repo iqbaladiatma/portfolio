@@ -3,7 +3,9 @@
   import type { PageData } from './$types';
 
   let { data }: { data: PageData } = $props();
-  const { project, prev, next } = data;
+  const project = $derived(data.project);
+  const prev = $derived(data.prev);
+  const next = $derived(data.next);
 
   const statusColor: Record<string, string> = {
     'Live': '#10b981',
@@ -11,13 +13,16 @@
     'In Development': '#f59e0b'
   };
 
-  let activeImage = $state(project.image || '');
+  let activeImage = $state('');
+  $effect(() => {
+    activeImage = project.image || '';
+  });
   let lightboxOpen = $state(false);
 
-  const allImages = [
+  const allImages = $derived([
     ...(project.image ? [{ image: project.image, title: 'Overview Page' }] : []),
     ...(project.gallery || [])
-  ];
+  ]);
 
   function openLightbox(img: string) {
     activeImage = img;

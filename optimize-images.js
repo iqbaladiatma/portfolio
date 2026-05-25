@@ -3,7 +3,7 @@ import path from 'path';
 import sharp from 'sharp';
 
 const sourceDir = './static/images';
-const backupDir = './static/images_backup';
+const backupDir = './images_backup';
 
 // 1. Pastikan folder backup ada
 if (!fs.existsSync(backupDir)) {
