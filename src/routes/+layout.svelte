@@ -13,6 +13,7 @@
   const navLinks = [
     { href: '/', label: 'Home', icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>' },
     { href: '/projects', label: 'Projects', icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>' },
+    { href: '/research', label: 'Research', icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>' },
     { href: '/academy', label: 'Hire Me', icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>' },
     { href: '/about', label: 'About', icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>' },
     { href: '/contact', label: 'Contact', icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>' }
@@ -180,6 +181,7 @@
             <ul class="links-list">
               <li><a href="/" class="footer-link">Home</a></li>
               <li><a href="/projects" class="footer-link">Projects</a></li>
+              <li><a href="/research" class="footer-link">Research</a></li>
               <li><a href="/academy" class="footer-link">Hire Me</a></li>
               <li><a href="/about" class="footer-link">About</a></li>
               <li><a href="/contact" class="footer-link">Contact</a></li>
@@ -190,8 +192,8 @@
             <h4 class="links-col-title">Selected Projects</h4>
             <ul class="links-list">
               <li><a href="/projects/hissa-saham-syariah" class="footer-link">Hissa Saham Syariah</a></li>
-              <li><a href="/projects/vetiver-layer1-cosmos" class="footer-link">Vetiver Blockchain</a></li>
-              <li><a href="/projects/simpah-pharmacy" class="footer-link">SIM-PP SaaS Pesantren</a></li>
+              <li><a href="/projects/vetiver" class="footer-link">Vetiver Blockchain</a></li>
+              <li><a href="/projects/sim-pah" class="footer-link">SIM-PAH - Abu Hurairah</a></li>
               <li><a href="/projects/takaful-keluarga-agent-profile" class="footer-link">Takaful Agent Profile</a></li>
             </ul>
           </div>
@@ -469,7 +471,7 @@
   }
 
   .mobile-header.menu-open {
-    height: 364px;
+    height: 408px;
     border-radius: 1.5rem;
     background: color-mix(in srgb, var(--bg-primary) 95%, transparent);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);

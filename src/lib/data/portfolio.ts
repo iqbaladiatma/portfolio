@@ -35,9 +35,6 @@ export const portfolioData = {
     { name: "Solidity / Smart Contracts", category: "Blockchain", level: 72 },
     { name: "Cosmos SDK", category: "Blockchain", level: 70 },
     { name: "Solana / Anchor", category: "Blockchain", level: 68 },
-    { name: "Git & GitHub", category: "Tools", level: 90 },
-    { name: "Docker", category: "Tools", level: 65 },
-    { name: "Google Gemini API", category: "AI/ML", level: 76 },
     { name: "ISO 9001:2015", category: "Standards", level: 82 }
   ],
 
@@ -116,14 +113,14 @@ export const portfolioData = {
       description: "Comprehensive educational platform for online learning and student management.",
       longDescription: "Manaahel is an advanced educational platform designed to facilitate online learning, student management, and academic progress tracking. Features interactive courses, assessments, and detailed analytics.",
       tags: ["Education", "E-Learning", "Student Management"],
-      link: "#",
-      github: "https://github.com/iqbaladiatma",
+      link: "https://manaahel.site",
+      github: "https://github.com/iqbaladiatma/manaahel-project",
       featured: false,
       year: "2025",
       status: "Live",
       role: "Full Stack Developer",
       duration: "3 months",
-      overview: "Educational platform that provides a complete online learning experience with course management, student tracking, and comprehensive analytics.",
+      overview: "Educational platform that provides a complete online learning experience with course management, student tracking, and comprehensive analytics. It is currently deployed at manaahel.site and actively maintained.",
       features: [
         "Interactive course creation",
         "Student enrollment and management",
@@ -133,53 +130,217 @@ export const portfolioData = {
         "Certificate generation"
       ],
       stack: [
-        { name: "Laravel", role: "Backend" },
-        { name: "Vue.js", role: "Frontend" },
-        { name: "MySQL", role: "Database" },
-        { name: "AWS S3", role: "File Storage" }
+        { name: "Laravel", role: "Backend Framework" },
+        { name: "Blade (54.6%)", role: "UI Templates" },
+        { name: "PHP (41.2%)", role: "Backend Logic" },
+        { name: "JavaScript (2.5%)", role: "Interactions" },
+        { name: "MySQL", role: "Database" }
       ],
       challenges: "Implementing a scalable video streaming solution while maintaining platform performance and providing real-time progress tracking.",
       image: "/projects/manaahel-depan.png",
       gallery: [
         { image: "/projects/manaahel-admin.png", title: "Admin Dashboard" }
       ],
-      color: "#8b5cf6"
+      color: "#8b5cf6",
+      extraDetails: [
+        {
+          title: "Repository Language Distribution",
+          type: "table",
+          content: "| Language | Percentage | Description |\n|---|---|---|\n| Blade | 54.6% | Laravel's templating engine for UI |\n| PHP | 41.2% | Backend logic and server-side processing |\n| JavaScript | 2.5% | Frontend interactivity and client-side logic |\n| HTML | 1.2% | Markup structure |\n| Other | 0.5% | Configuration files and others |"
+        }
+      ]
     },
     {
-      slug: "rent-car",
-      title: "Rent Car — Vehicle Rental Management",
+      slug: "anugerah-rentcar",
+      title: "Anugerah Rentcar — Fleet & Rental Management",
       description: "Complete vehicle rental management system with booking, tracking, and payment processing.",
-      longDescription: "Rent Car is a comprehensive vehicle rental management platform that handles everything from vehicle inventory to customer bookings, payment processing, and fleet management. Designed for rental companies of all sizes.",
-      tags: ["Rental", "Booking", "Fleet Management"],
-      link: "#",
-      github: "https://github.com/iqbaladiatma",
+      longDescription: "Anugerah Rentcar is a comprehensive vehicle rental management platform built with Laravel 12 and Livewire 3. It handles vehicle inventory, customer bookings, fleet management, and active session monitoring.",
+      tags: ["Rental", "Booking", "Fleet Management", "Laravel 12", "Livewire 3"],
+      link: "https://github.com/iqbaladiatma/anugerah-rentcar",
+      github: "https://github.com/iqbaladiatma/anugerah-rentcar",
       featured: false,
       year: "2025",
       status: "Live",
       role: "Full Stack Developer",
       duration: "2 months",
-      overview: "Vehicle rental management system that streamlines the entire rental process from booking to return, with integrated payment and fleet management.",
+      overview: "Vehicle rental management system that streamlines the entire rental process from booking to return, with integrated session tracking, multi-role configurations, and fleet management.",
       features: [
         "Vehicle inventory management",
-        "Online booking system",
-        "Payment processing integration",
-        "Availability calendar",
-        "Customer management",
-        "Maintenance tracking"
+        "Online booking and availability calendar",
+        "Active Sessions Monitoring (names, email, IP, browser, and kick button)",
+        "Role-Based Access Control (RBAC): Super Admin, Admin, Staff, Driver",
+        "Invoice PDF generation with Laravel DomPDF",
+        "Excel report export with Maatwebsite Excel",
+        "User account activation and deactivation system"
       ],
       stack: [
-        { name: "Laravel", role: "Backend" },
-        { name: "React", role: "Frontend" },
-        { name: "Stripe", role: "Payment" },
-        { name: "PostgreSQL", role: "Database" }
+        { name: "Laravel 12", role: "Backend Framework" },
+        { name: "Livewire 3.6 & Volt 1.7", role: "Reactive Components" },
+        { name: "Tailwind CSS", role: "Styling Framework" },
+        { name: "Spatie Permission 6.24", role: "Access Control" },
+        { name: "Jenssegers Agent 2.6", role: "Device & Agent Detection" },
+        { name: "Laravel DomPDF 3.1", role: "PDF Generator" },
+        { name: "Maatwebsite Excel 3.1", role: "Excel Import/Export" }
       ],
-      challenges: "Creating a real-time availability system that could handle concurrent bookings while preventing double bookings and managing complex pricing rules.",
+      challenges: "Creating a real-time availability system that could handle concurrent bookings while preventing double bookings, and building active session tracking to terminate user sessions on demand.",
       image: "/projects/rent-car-dashboard.png",
       gallery: [
         { image: "/projects/rent-car-detail.png", title: "Vehicle Details" },
         { image: "/projects/rent-car-help.png", title: "Help & Support" }
       ],
-      color: "#f59e0b"
+      color: "#f59e0b",
+      security: `### Active Sessions & Security Guard
+- Route super admin dilindungi oleh middleware \`super.admin\` kustom.
+- Hanya user dengan role \`super_admin\` yang bisa mengakses panel kontrol. User lain mendapat respons 403 Forbidden.
+- Pelacakan sesi aktif melacak alamat IP, data user-agent (sistem operasi dan peramban), halaman terakhir yang dikunjungi, serta waktu aktivitas terakhir.
+- Sesi aktif akan dibersihkan dari database secara otomatis setiap 1 jam jika tidak ada aktivitas lebih dari 5 menit.`,
+      dbSchema: `### Database Architecture
+
+#### Tabel Utama: \`users\`
+\`\`\`sql
+ALTER TABLE users MODIFY COLUMN role ENUM(
+  'super_admin', 
+  'admin', 
+  'staff', 
+  'driver'
+) NOT NULL DEFAULT 'staff';
+\`\`\`
+
+#### Tabel Baru: \`active_sessions\`
+\`\`\`sql
+CREATE TABLE active_sessions (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT UNSIGNED NULL,
+    session_id VARCHAR(255) UNIQUE NOT NULL,
+    ip_address VARCHAR(45) NULL,
+    user_agent TEXT NULL,
+    browser VARCHAR(255) NULL,
+    platform VARCHAR(255) NULL,
+    device VARCHAR(255) NULL,
+    current_page VARCHAR(255) NULL,
+    last_activity TIMESTAMP NOT NULL,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX (user_id),
+    INDEX (session_id),
+    INDEX (last_activity)
+);
+\`\`\`
+
+#### Hubungan Entitas:
+- **User** memiliki satu/banyak **ActiveSession**.
+- Admin mengawasi seluruh data booking, kendaraan, staff, driver, dan sesi.`,
+      extraDetails: [
+        {
+          title: "Sistem Peran (User Roles)",
+          type: "table",
+          content: "| Role | Deskripsi | Akses |\n|---|---|---|\n| **super_admin** | Administrator tertinggi | Akses penuh seluruh fitur, monitor & kick user online, edit system settings |\n| **admin** | Administrator | Manajemen sistem & CRUD data master |\n| **staff** | Staf operator | Manajemen booking harian & ketersediaan kendaraan |\n| **driver** | Pengemudi | View profile pribadi & melihat daftar booking penugasan |"
+        },
+        {
+          title: "Cara Setup & Instalasi",
+          type: "code",
+          content: "```bash\n# 1. Clone repository\ngit clone https://github.com/iqbaladiatma/anugerah-rentcar.git\ncd anugerah-rentcar\n\n# 2. Install dependencies\ncomposer install\nnpm install\n\n# 3. Setup environment\ncp .env.example .env\nphp artisan key:generate\n\n# 4. Migrate database & Seed\nphp artisan migrate --seed\n\n# 5. Build assets & Run\nnpm run build\nphp artisan serve\n```"
+        }
+      ]
+    },
+    {
+      slug: "course-management",
+      title: "Course Management — AHE Student Management System",
+      description: "Integrated school administration platform for managing student profiles, attendance, tuition fees, and WhatsApp alerts.",
+      longDescription: "Course Management is a school management system built with Laravel 12 for AHE (Ahlan Wa Sahlan Education). It features polymorphic attendance, automated student ID sequence, tuition billing checks, and automated WhatsApp parent alerts.",
+      tags: ["School Management", "Laravel 12", "Polymorphic Relationships", "WhatsApp API"],
+      link: "https://github.com/iqbaladiatma/course-management",
+      github: "https://github.com/iqbaladiatma/course-management",
+      featured: false,
+      year: "2026",
+      status: "Completed",
+      role: "Full Stack Developer",
+      duration: "2 weeks",
+      overview: "Course Management is a highly-tuned administration platform for Ahlan Wa Sahlan Education (AHE). It simplifies daily operations by integrating polymorphic database relations for tracking student/teacher attendance under a single schema, managing monthly tuition cycles, and calculating teacher salaries.",
+      features: [
+        "Auto-Generated Student Numbers (Format: AHE25001, AHE25002, dst.)",
+        "Polymorphic Attendance System: single table for student and teacher attendance log",
+        "Unique Tuition constraint: prevents duplicate billing entries per month/student",
+        "Interactive analytics and attendance reporting for selected date ranges",
+        "Integrated WhatsApp Helper to format and validate Indonesian numbers (628xxx)",
+        "Library inventory tracking (books pricing & stock constraint controls)",
+        "Automated teacher salary sheets mapped to classes and active attendance"
+      ],
+      stack: [
+        { name: "Laravel 12", role: "Backend Framework" },
+        { name: "Blade Templates", role: "Svelte-like Server Render" },
+        { name: "Tailwind CSS", role: "UI Styling" },
+        { name: "SQLite / MySQL", role: "Relational Database" },
+        { name: "PHPUnit 11.5", role: "Testing Framework" },
+        { name: "Laravel Pint", role: "Code Style Linters" }
+      ],
+      challenges: "Structuring a polymorphic database architecture for the attendance log so that it cleanly handles both student and teacher relations, while preventing duplicates through compound indices.",
+      image: "/projects/ahe-medang-dashboad.png",
+      color: "#8b5cf6",
+      dbSchema: `### Database Architecture & Relationships
+
+#### 1. Tabel Utama: \`students\`
+- \`id\` (primary key)
+- \`no_induk\` (string, unique) → Generated otomatis: AHE25001
+- \`nama_lengkap\` (string)
+- \`no_wa\` (string) → Validasi format WhatsApp: 628xxx
+- \`level_id\` (foreign key → levels)
+- \`status\` (aktif / non_aktif)
+- \`soft deletes\` aktif
+
+#### 2. Tabel Polimorfik: \`attendances\`
+- \`id\` (primary key)
+- \`tanggal\` (date)
+- \`type\` (student / teacher)
+- \`attendable_id\` (polymorphic ID)
+- \`attendable_type\` (polymorphic type)
+- \`status\` (hadir, tidak_hadir, izin, sakit)
+- \`subject_id\` (foreign key, nullable)
+- \`jam_masuk\` & \`jam_keluar\` (time, nullable)
+- **Unique Constraint**: \`(tanggal, type, attendable_id, subject_id)\`
+
+#### 3. Tabel Keuangan: \`tuitions\`
+- \`student_id\` (foreign key)
+- \`bulan_tagihan\` (month)
+- \`nominal\` (decimal)
+- \`status\` (belum_bayar, lunas, cicilan)
+- **Unique Constraint**: \`(student_id, bulan_tagihan)\` untuk mencegah tagihan ganda.`,
+      routes: `### Route Structure
+
+\`\`\`php
+# Student Routes
+GET    /students              - Daftar siswa
+GET    /students/create       - Form tambah siswa
+POST   /students              - Simpan siswa baru
+GET    /students/{id}         - Detail siswa
+GET    /students/{id}/edit    - Form edit siswa
+PUT    /students/{id}         - Update siswa
+DELETE /students/{id}         - Hapus siswa
+
+# Teacher Routes
+GET    /teachers              - Daftar guru
+POST   /teachers              - Simpan guru baru
+GET    /teachers/{id}/edit    - Form edit guru
+
+# Attendance Routes
+GET    /attendances           - Daftar absensi
+GET    /attendances/create    - Form input absensi
+POST   /attendances           - Simpan absensi
+GET    /attendances/report    - Laporan absensi
+\`\`\``,
+      extraDetails: [
+        {
+          title: "Format Nomor Induk Otomatis (Student ID Generator)",
+          type: "text",
+          content: "Sistem secara dinamis menyusun nomor induk siswa menggunakan format:\n**\`AHE25001\`**\n- **AHE** = Inisial lembaga Ahlan Wa Sahlan Education\n- **25** = Dua digit tahun pendaftaran (2025)\n- **001** = Nomor urut urutan siswa terdaftar pada tahun tersebut"
+        },
+        {
+          title: "Cara Setup & Migrasi",
+          type: "code",
+          content: "```bash\n# 1. Setup aplikasi\ncomposer install\nnpm install\ncp .env.example .env\nphp artisan key:generate\n\n# 2. Migrasi Database (Menggunakan script batch atau manual)\n./fresh-migrate.bat\n# atau\nphp artisan migrate:fresh --seed\n\n# 3. Jalankan pengujian unit\nphp artisan test\n```"
+        }
+      ]
     },
     {
       slug: "hissa-saham-syariah",
@@ -222,77 +383,214 @@ export const portfolioData = {
       color: "#16a34a"
     },
     {
-      slug: "vetiver-layer1-cosmos",
-      title: "Vetiver — Layer-1 Blockchain (Cosmos SDK)",
-      description: "A modular Proof-of-Stake Layer-1 blockchain built on Cosmos SDK with CometBFT consensus and IBC cross-chain connectivity.",
-      longDescription: "Designed and implemented Vetiver, a modular PoS Layer-1 blockchain on the Cosmos SDK framework utilizing CometBFT for Byzantine Fault Tolerance consensus. Demonstrates end-to-end knowledge of modern distributed ledger technology including cross-chain interoperability via IBC.",
-      tags: ["Go", "Cosmos SDK", "Blockchain", "IBC"],
-      link: "https://github.com/iqbaladiatma",
+      slug: "vetiver",
+      title: "Vetiver ($VETI) — The Silent Anchor of DeFi",
+      description: "A cryptocurrency ecosystem based on the stabilizing philosophy of the Vetiver plant, integrating multi-chain tokens, Soil Treasury, and deep root staking.",
+      longDescription: "Vetiver ($VETI) is a decentralized finance ecosystem designed as an anti-erosion portfolio stabilizer. Features two core tokens, deep-root staking curves, Certik audit compliance, and DAO Soil Treasury orchestration.",
+      tags: ["Solidity", "DeFi", "Solana", "Cosmos SDK", "Tokenomics"],
+      link: "https://vetiver.network",
       github: "https://github.com/iqbaladiatma",
       featured: true,
       year: "2025",
       status: "Live",
       role: "Lead Blockchain Developer",
       duration: "Ongoing",
-      overview: "A production-grade Layer-1 blockchain built from scratch on Cosmos SDK. Configured core modules (Auth, Bank, Staking, Governance, Mint) with IBC and Interchain Accounts for cross-chain connectivity. Includes multi-validator testnet provisioning and comprehensive simulation tests.",
+      overview: "Vetiver ($VETI) is a cryptocurrency project bridging natural conservation philosophy with modern decentralized protocols. It replicates the deep rooting mechanism of the vetiver plant — which prevents soil erosion and purifies water — through high-liquidity lockups, community green-treasury investments (Soil Treasury), and security audits.",
       features: [
-        "Modular PoS consensus via CometBFT (BFT)",
-        "IBC & Interchain Accounts (ICA) for cross-chain connectivity",
-        "Core modules: Auth, Bank, Staking, Governance, Mint",
-        "Simulation tests for state determinism & import/export integrity",
-        "Multi-validator testnet provisioning",
-        "Cross-compilation build targets for Linux & Darwin",
-        "depinject-based dependency wiring"
+        "Dual Token integration: VetiverSol ($VSOL) on Solana DEX & TokenVetiver on L1",
+        "Soil Treasury DAO: community funds allocated to real-world green projects and buybacks",
+        "Deep Root Staking: dynamic APY multiplier curves based on token lockup periods",
+        "Comprehensive smart contract audits by Certik & TechRate (overall score 98/100)",
+        "Anti-Erosion market mechanism to buffer extreme portfolio volatility",
+        "Decentralized governance for token burn rates and treasury distribution"
       ],
       stack: [
-        { name: "Go", role: "Language" },
-        { name: "Cosmos SDK", role: "Blockchain Framework" },
-        { name: "CometBFT", role: "Consensus Engine" },
-        { name: "IBC Protocol", role: "Cross-chain" },
-        { name: "Protocol Buffers", role: "Serialization" }
+        { name: "Solidity", role: "Ethereum Contracts" },
+        { name: "Rust", role: "Solana Programs" },
+        { name: "Go", role: "Cosmos SDK Framework" },
+        { name: "Tailwind CSS", role: "Visual Interface" },
+        { name: "CometBFT", role: "L1 Consensus Engine" }
       ],
-      challenges: "Wiring complex module dependencies with depinject while ensuring state determinism across simulation runs and maintaining IBC compatibility for cross-chain operations.",
+      challenges: "Designing and auditing custom staking curves that mathematically reward longer holding cycles while keeping Gas execution costs minimal across multi-chain bridges.",
       image: "/projects/vetiver-depan.png",
-      color: "#6366f1"
+      color: "#2F7A52",
+      extraDetails: [
+        {
+          title: "Tokenomics (Supply: 1 Miliar $VETI)",
+          type: "table",
+          content: "| Alokasi | Persentase | Fungsi |\n|---|---|---|\n| **Ecosystem Growth** | 30% | Pengembangan ekosistem, kemitraan, dApps |\n| **Validator Rewards** | 25% | Insentif keamanan jaringan & validasi PoS |\n| **Core Team** | 20% | Alokasi tim inti dengan jadwal vesting panjang |\n| **Public Seed Sale** | 15% | Distribusi token publik perdana |\n| **Emergency Reserve** | 10% | Dana cadangan darurat stabilitas pasar |"
+        },
+        {
+          title: "3 Pilar Filosofi Utama",
+          type: "list",
+          content: "- **Anti-Erosion (🛡️)**: Penyeimbang portofolio, dirancang untuk menjaga nilai saat terjadi guncangan pasar ekstrem.\n- **The Purifier (💧)**: Transparansi audit total. Smart contract divalidasi penuh oleh Certik & TechRate dengan skor 98/100.\n- **Deep Roots (⚓)**: Likuiditas terkunci jangka panjang. Bukan skema instan, melainkan pertumbuhan finansial berkelanjutan."
+        },
+        {
+          title: "Roadmap Pengembangan (3 Fase)",
+          type: "list",
+          content: "- **Fase 1: SEEDING (Penyemaian)**: Audit Smart Contract, Peluncuran Website Resmi, Pembentukan Komunitas, Listing di DEX (Pump.fun).\n- **Fase 2: ROOTING (Pengakaran)**: CEX Listing, Peluncuran dApp Staking, Integrasi CoinGecko & CoinMarketCap, Kemitraan Strategis.\n- **Fase 3: BLOOMING (Mekar)**: Transisi penuh ke Tata Kelola DAO, Ekspansi lintas rantai (Cross-chain Bridge), Peluncuran NFT 'Vetiver Roots'."
+        },
+        {
+          title: "Tim Inti Pendiri (Founders)",
+          type: "list",
+          content: "- **Iqbal Muhammad Adiatma** — Founder & CTO\n- **Rakhn.** — Co-Founder & Technical Architect\n- **Nagara** — Co-Founder & Growth Lead\n- **Jexki** — Management & Operations"
+        }
+      ]
     },
     {
-      slug: "simpah-pharmacy",
-      title: "SIM-PP — Manajemen Pondok Pesantren",
-      description: "SaaS multi-tenant platform for managing Islamic boarding school operations — students, Tahfidz tracking, finance, and WhatsApp notifications.",
-      longDescription: "SIM-PP is a multi-tenant SaaS platform built specifically for Indonesian Islamic boarding schools (pesantren). It digitizes the entire operational workflow: student data, Tahfidz (Quran memorization) tracking, finance, academic scheduling, payroll, and a digital student e-wallet with NFC/QR support.",
-      tags: ["Laravel 12", "Svelte 5", "Inertia.js", "SaaS", "Multi-tenant"],
-      link: "#",
-      github: "https://github.com/iqbaladiatma",
-      featured: false,
+      slug: "sim-pah",
+      title: "SIM-PAH — Abu Hurairah QMS & Operations",
+      description: "Sistem Informasi Manajemen Rumah Tangga (URT) & QMS ISO 9001:2015 untuk 28 lembaga internal Pondok Pesantren Abu Hurairah Mataram.",
+      longDescription: "SIM-PAH is an operations and compliance system for Abu Hurairah Islamic Boarding School. It manages assets, inventory tracking, service requests, and automated checklists compliant with ISO 9001:2015 standards, serving 28 institutions.",
+      tags: ["Laravel 12", "Vue 3", "Inertia.js", "MySQL", "ISO 9001:2015"],
+      link: "https://abhursarpras.com",
+      github: "https://github.com/iqbaladiatma/sim-pah",
+      featured: true,
       year: "2026",
       status: "Completed",
-      role: "Full-Stack Engineer",
-      duration: "1 month",
-      overview: "A production-grade SaaS platform for pesantren management in Indonesia. Multi-tenant architecture with full data isolation per institution. Subscription-based with three tiers: Basic (Rp 500k/mo), Pro (Rp 1.5jt/mo), and Enterprise (Rp 3jt/mo).",
+      role: "Full Stack Engineer",
+      duration: "7 days",
+      overview: "SIM-PAH (Sistem Informasi Manajemen Pondok Pesantren Abu Hurairah - Mataram) adalah platform operasional terpusat yang dirancang khusus untuk mengelola logistik, rumah tangga (URT), dan pemenuhan standar kepatuhan ISO 9001:2015 pada 28 unit/lembaga di bawah naungan pesantren. Menggunakan arsitektur multi-tenancy kustom, platform ini dikembangkan secara rekor dalam waktu 7 hari dengan mengimplementasikan metodologi Vibe Coding.",
       features: [
-        "Multi-tenancy with full data isolation (Stancl/Tenancy)",
-        "Smart Tahfidz Tracker — real-time Quran memorization with WhatsApp notifications",
-        "Digital student e-wallet with NFC/QR card support",
-        "Finance module — billing, payments, student wallet",
-        "Academic module — scheduling, attendance, grades, e-rapor",
-        "HR module — teacher data, attendance, payroll",
-        "WhatsApp Gateway — automated notifications to parents",
-        "RBAC — role-based access control per tenant"
+        "Multi-Tenancy per Lembaga: filter resource (item, request, room) berbasis institution_id",
+        "Role-Based Access Control (RBAC): Super Admin (System control), Admin URT, dan Lembaga (Karyawan)",
+        "Manajemen Inventori & Stok Real-Time dengan ambang batas stok minimum (low stock alerts)",
+        "Sistem Pengajuan URT (Utilitas, Habis Pakai, Darurat) dengan upload foto bukti & estimasi biaya",
+        "Sertifikasi ISO 9001:2015: 39 prosedur ISO (maintenance logs, checklists, nonconformity tracking)",
+        "Audit Trail Otomatis: mencatat aksi create, update, delete detail (nilai lama vs baru) via Spatie Activitylog",
+        "Integrasi PWA (Vite PWA Plugin v1.2.0) untuk akses mobile instan karyawan lapangan"
       ],
       stack: [
-        { name: "Laravel 12", role: "Backend" },
-        { name: "Svelte 5 + Inertia.js 2", role: "Frontend" },
-        { name: "Tailwind CSS 4", role: "Styling" },
-        { name: "Stancl/Tenancy", role: "Multi-tenancy" },
-        { name: "MySQL / PostgreSQL", role: "Database" }
+        { name: "Laravel 12", role: "Backend Engine" },
+        { name: "Vue 3 & Inertia.js", role: "Frontend SPA (No Filament)" },
+        { name: "MySQL", role: "Database (66 migrations)" },
+        { name: "Tailwind CSS", role: "Styling (#C9A658 Gold primary)" },
+        { name: "Spatie Activitylog v4.11", role: "Audit Trail & Logs" },
+        { name: "Vite PWA Plugin v1.2.0", role: "Progressive Web App" },
+        { name: "Maatwebsite Excel v3.1", role: "Excel Import/Export" }
       ],
-      challenges: "Designing a flexible multi-tenant architecture that isolates data per pesantren while keeping the codebase maintainable. The Tahfidz tracker required real-time sync between ustadz input and parent WhatsApp notifications.",
+      challenges: "Mengotomasi 39 prosedur operasional ISO dan formulir checklist yang kompleks ke dalam basis data reaktif tanpa menggunakan admin framework otomatis, untuk mempertahankan kontrol penuh atas antarmuka dan efisiensi query.",
       image: "/projects/sim-pah-dashboard.png",
       gallery: [
-        { image: "/projects/sim-pah-iso.png", title: "ISO 9001 Compliance" },
-        { image: "/projects/sim-pah-login.png", title: "Login Page" }
+        { image: "/projects/sim-pah-iso.png", title: "ISO 9001 Compliance Module" },
+        { image: "/projects/sim-pah-login.png", title: "Login Page with Institution Selector" }
       ],
-      color: "#2563eb"
+      color: "#C9A658",
+      whyNot: "Manual CRUD menggunakan Vue 3 + Inertia dipilih alih-alih Filament untuk memberikan kontrol kustomisasi UI/UX tanpa batas, menghindari bottleneck plugin, dan mempercepat waktu muat halaman untuk 28 institusi.",
+      metrics: [
+        { label: "Waktu Development", value: "7 Hari (vs 3-6 bulan normal)" },
+        { label: "AI-Generated Code", value: "70-85% keseluruhan (90-100% fase terstruktur)" },
+        { label: "Total Lines of Code", value: "~37,875 (tanpa vendor)" },
+        { label: "Custom Files", value: "250+ (controllers, models, Vue)" },
+        { label: "Migrasi Database", value: "66 migrasi" },
+        { label: "Modul Prosedur ISO", value: "39 prosedur" },
+        { label: "Audit Trail Entries", value: "184 activity logs" },
+        { label: "Prompt AI Used", value: "~45 prompt" }
+      ],
+      dbSchema: `### Database Architecture (15 Models Utama)
+
+#### Core Entities
+- \`User\` (\`users\`) → Super Admin, Admin URT, Lembaga
+- \`Institution\` (\`institutions\`) → 28 lembaga internal
+- \`Room\` (\`rooms\`) → Ruang/lokasi per lembaga
+- \`SystemSetting\` → Konfigurasi global
+
+#### Inventory & Assets
+- \`Item\` (\`items\`) → Barang inventori dengan pelacakan stok real-time
+- \`ItemUpdateRequest\` → Approval workflow perubahan stok barang
+- \`BorrowingRecord\` → Peminjaman barang dengan tanda tangan digital
+- \`AssetLifecycleLog\` → Catatan siklus hidup aset (lelang/pembuangan)
+
+#### Request & Workflows
+- \`Request\` (\`requests\`) → Pengajuan umum (utilitas, habis pakai, darurat)
+- \`Vehicle\` (\`vehicles\`) → Kendaraan operasional pesantren
+- \`VehicleRequest\` → Pengajuan pemakaian kendaraan
+
+#### ISO 9001:2015 Compliance
+- \`MaintenanceLog\` (160+ fields!) → Log maintenance utilitas & aset
+- \`IsoChecklist\` → Template checklist ISO
+- \`IsoChecklistLog\` → Catatan eksekusi checklist ISO
+- \`ParkingLog\` → Monitoring area parkir`,
+      routes: `### Route & Endpoint Map
+
+\`\`\`php
+# Authentication
+/login                    → Login dengan dropdown institusi
+
+# Employee Routes (Role: lembaga)
+/dashboard               → Karyawan dashboard
+/requests                → Kelola requests mereka
+/items                   → Lihat inventory
+/requests/create         → Buat request baru
+
+# Admin Routes (Prefix: /admin)
+/admin/dashboard         → Admin dashboard
+/admin/institutions      → CRUD institusi
+/admin/users            → CRUD users
+/admin/items            → CRUD items (with import template)
+/admin/rooms            → CRUD rooms
+/admin/requests         → Manage semua requests
+/admin/item-requests    → Approve/reject item updates
+/admin/procedures       → ISO procedures management
+  /procedures/dashboard     → Procedure overview
+  /procedures/{type}        → View specific procedure
+  /procedures/export-all    → Export semua procedures
+  /procedures/import/{type} → Import dari Excel
+
+# Super Admin Only
+/admin/system-control       → System orchestration
+/admin/activity-log         → View audit trails
+/admin/online-users        → Manage active sessions
+\`\`\``,
+      structure: `### Project Folder Structure
+\`\`\`
+sim-pah/
+├── app/
+│   ├── Http/Controllers/Admin/
+│   │   ├── AdminDashboardController.php
+│   │   ├── InstitutionController.php
+│   │   ├── ItemController.php
+│   │   ├── UserController.php
+│   │   ├── UrtProcedureController.php (ISO)
+│   │   └── ActivityLogController.php
+│   ├── Http/Middleware/
+│   │   ├── AdminAccess.php
+│   │   └── RoleMiddleware.php
+│   └── Models/ (15 models)
+├── database/migrations/ (66 migrations)
+├── resources/
+│   ├── js/Pages/ (30+ Vue components)
+│   └── css/app.css (Tailwind)
+├── routes/web.php
+└── docs/
+    ├── DATABASE_SCHEMA.md
+    └── ERD.md
+\`\`\``,
+      security: `### Authentication & Security Flow
+- **Multi-Tenant Isolation**: Isolasi data yang ketat berbasis institusi:
+  \`\`\`sql
+  SELECT * FROM items WHERE institution_id = auth()->user()->institution_id
+  \`\`\`
+- **Role-Based Guards**: Middleware tersemat untuk menyaring hak akses halaman admin dan karyawan.
+- **Audit Trails**: Perubahan field krusial disimpan otomatis (nilai sebelum vs sesudah) menggunakan Spatie Activitylog.
+- **Soft Deletes**: Pengajuan dan inventori yang dihapus didukung soft deletes untuk memfasilitasi audit kepatuhan ISO.`,
+      workflow: `### Vibe Coding Methodology
+Proyek ini dibangun melalui kolaborasi tingkat lanjut Manusia-AI dengan framework 3 pilar:
+1. **Context Persistence**: Pemanfaatan berkas \`rules.md\` di folder \`.agent/rules/\` dan Model Context Protocol (MCP) untuk mencegah hilangnya memori instruksi AI.
+2. **Schema Engineering**: Perencanaan database ERD secara komprehensif sebelum penulisan baris kode pertama.
+3. **Conditional Tech Stack**: Pemilihan Laravel 12 karena strukturnya yang berpendirian (opinionated) didukung Vue 3 untuk kerangka kerja SPA reaktif cepat.`,
+      extraDetails: [
+        {
+          title: "Growth Potential & Scale",
+          type: "list",
+          content: "- **Aplikasi Mobile**: Rencana ekspansi menggunakan Flutter untuk tim lapangan.\n- **Notifikasi Real-time**: Integrasi Pusher untuk notifikasi status pengajuan.\n- **ML Forecasting**: Prediksi habisnya inventori berbasis penggunaan historis.\n- **Manajemen Anggaran**: Modul penyesuaian biaya operasional terhadap kas tahunan."
+        },
+        {
+          title: "Open Science & Reproducibility",
+          type: "text",
+          content: "Repositori kode bersifat publik di GitHub berlisensi MIT. Berkas perencanaan ERD, log prompt, dan berkas aturan agen tersedia lengkap untuk tujuan reproduksi ilmiah.\n\n**Citation:**\n```bibtex\n@misc{iqbal2026simpah,\n  author       = {Iqbal Muhammad Adiatma},\n  title        = {SIM URT PAH - Mataram: Vibe Coding MIS Implementation},\n  year         = {2026},\n  publisher    = {GitHub},\n  howpublished = {\\url{https://github.com/iqbaladiatma/sim-pah}}\n}\n```"
+        }
+      ]
     },
     {
       slug: "takaful-keluarga-agent-profile",
@@ -322,7 +620,6 @@ export const portfolioData = {
         { name: "Tailwind CSS", role: "Styling" }
       ],
       challenges: "Designing a flexible multi-tenant architecture that allows per-agent customization while keeping the admin experience simple and the frontend fast.",
-      image: "/projects/takaful-depan.png",
       gallery: [
         { image: "/projects/takaful-admin.png", title: "Admin Dashboard" }
       ],

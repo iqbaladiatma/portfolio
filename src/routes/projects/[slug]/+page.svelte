@@ -32,6 +32,105 @@
   function closeLightbox() {
     lightboxOpen = false;
   }
+
+  let activeTab = $state('overview');
+
+  const hasArchitecture = $derived(!!(project.dbSchema || project.routes || project.structure));
+  const hasDevelopment = $derived(!!(project.metrics || project.whyNot || project.workflow || project.security));
+  const hasEcosystem = $derived(!!(project.extraDetails && project.extraDetails.length > 0));
+
+  $effect(() => {
+    // Reset tab to overview when project changes
+    const _slug = project.slug;
+    activeTab = 'overview';
+  });
+
+  function parseMarkdown(md: string): string {
+    if (!md) return '';
+    const lines = md.split('\n');
+    let inList = false;
+    let inCode = false;
+    let codeContent: string[] = [];
+    let result: string[] = [];
+    
+    for (let line of lines) {
+      if (line.startsWith('```')) {
+        if (inCode) {
+          inCode = false;
+          result.push(`<pre class="markdown-code"><code>${codeContent.join('\n')}</code></pre>`);
+          codeContent = [];
+        } else {
+          inCode = true;
+        }
+        continue;
+      }
+      
+      if (inCode) {
+        codeContent.push(line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+        continue;
+      }
+      
+      const trimmed = line.trim();
+      
+      if (trimmed.startsWith('### ')) {
+        if (inList) { result.push('</ul>'); inList = false; }
+        result.push(`<h4 class="markdown-h3">${trimmed.substring(4)}</h4>`);
+        continue;
+      }
+      if (trimmed.startsWith('#### ')) {
+        if (inList) { result.push('</ul>'); inList = false; }
+        result.push(`<h5 class="markdown-h4">${trimmed.substring(5)}</h5>`);
+        continue;
+      }
+      
+      if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+        if (!inList) {
+          result.push('<ul class="markdown-ul">');
+          inList = true;
+        }
+        const content = trimmed.substring(2)
+          .replace(/`([^`]+)`/g, '<code class="markdown-inline-code">$1</code>')
+          .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        result.push(`<li class="markdown-li">${content}</li>`);
+        continue;
+      }
+      
+      if (trimmed === '') {
+        if (inList) {
+          result.push('</ul>');
+          inList = false;
+        }
+        result.push('<div class="markdown-spacer"></div>');
+        continue;
+      }
+      
+      if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+        if (inList) { result.push('</ul>'); inList = false; }
+        if (trimmed.includes('---')) {
+          continue;
+        }
+        const cells = trimmed.split('|').slice(1, -1).map(c => c.trim());
+        result.push(`<div class="markdown-table-row">${cells.map(c => `<span class="markdown-table-cell">${c.replace(/`([^`]+)`/g, '<code class="markdown-inline-code">$1</code>').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')}</span>`).join('')}</div>`);
+        continue;
+      }
+      
+      if (inList) {
+        result.push('</ul>');
+        inList = false;
+      }
+      
+      const content = trimmed
+        .replace(/`([^`]+)`/g, '<code class="markdown-inline-code">$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      result.push(`<p class="markdown-p">${content}</p>`);
+    }
+    
+    if (inList) {
+      result.push('</ul>');
+    }
+    
+    return result.join('\n');
+  }
 </script>
 
 <svelte:head>
@@ -208,93 +307,275 @@
     </section>
   </Reveal>
 
+  <!-- Tabs Navigation -->
+  <div class="tabs-nav-container">
+    <div class="tabs-nav" role="tablist" aria-label="Project details tabs">
+      <button 
+        class="tab-btn" 
+        class:active={activeTab === 'overview'} 
+        onclick={() => activeTab = 'overview'}
+        role="tab"
+        aria-selected={activeTab === 'overview'}
+      >
+        Overview
+      </button>
+      
+      {#if hasArchitecture}
+        <button 
+          class="tab-btn" 
+          class:active={activeTab === 'architecture'} 
+          onclick={() => activeTab = 'architecture'}
+          role="tab"
+          aria-selected={activeTab === 'architecture'}
+        >
+          Architecture
+        </button>
+      {/if}
+      
+      {#if hasDevelopment}
+        <button 
+          class="tab-btn" 
+          class:active={activeTab === 'development'} 
+          onclick={() => activeTab = 'development'}
+          role="tab"
+          aria-selected={activeTab === 'development'}
+        >
+          Dev & Metrics
+        </button>
+      {/if}
+      
+      {#if hasEcosystem}
+        <button 
+          class="tab-btn" 
+          class:active={activeTab === 'ecosystem'} 
+          onclick={() => activeTab = 'ecosystem'}
+          role="tab"
+          aria-selected={activeTab === 'ecosystem'}
+        >
+          Ecosystem
+        </button>
+      {/if}
+    </div>
+  </div>
+
   <!-- Editorial layout: Content + Sticky Sidebar -->
   <div class="editorial-grid">
 
     <!-- Left Main Column -->
     <main class="editorial-content">
 
-      <!-- Section: Overview -->
-      <Reveal>
-        <section class="details-section">
-          <h2 class="section-title">
-            <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
-            Overview
-          </h2>
-          <div class="overview-body">
-            <p class="intro-paragraph">{project.overview}</p>
-          </div>
-        </section>
-      </Reveal>
-
-      <!-- Section: Key Features -->
-      <Reveal delay={60}>
-        <section class="details-section">
-          <h2 class="section-title">
-            <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
-            Key Features
-          </h2>
-          <div class="features-list">
-            {#each project.features as feature, i}
-              <div class="feature-row">
-                <span class="feature-number" style="color: {project.color || 'var(--accent-color)'}">{String(i + 1).padStart(2, '0')}</span>
-                <div class="feature-desc">
-                  <p>{feature}</p>
-                </div>
-              </div>
-            {/each}
-          </div>
-        </section>
-      </Reveal>
-
-      <!-- Section: Dynamic Gallery -->
-      {#if project.gallery && project.gallery.length > 0}
-        <Reveal delay={80}>
+      {#if activeTab === 'overview'}
+        <!-- Section: Overview -->
+        <Reveal>
           <section class="details-section">
             <h2 class="section-title">
               <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
-              System Gallery
+              Overview
             </h2>
-            <div class="gallery-layout-grid">
-              {#each project.gallery as item, i}
-                <button class="gallery-thumbnail-card" onclick={() => openLightbox(item.image)} aria-label="Zoom gallery image">
-                  <div class="thumbnail-aspect-wrapper">
-                    <img src={item.image} alt={item.title || `Screenshot ${i + 1}`} loading="lazy" />
-                    <div class="thumbnail-hover-effect">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        <line x1="11" y1="8" x2="11" y2="14"></line>
-                        <line x1="8" y1="11" x2="14" y2="11"></line>
-                      </svg>
-                    </div>
+            <div class="overview-body">
+              <p class="intro-paragraph">{project.overview}</p>
+            </div>
+          </section>
+        </Reveal>
+
+        <!-- Section: Key Features -->
+        <Reveal delay={60}>
+          <section class="details-section">
+            <h2 class="section-title">
+              <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
+              Key Features
+            </h2>
+            <div class="features-list">
+              {#each project.features as feature, i}
+                <div class="feature-row">
+                  <span class="feature-number" style="color: {project.color || 'var(--accent-color)'}">{String(i + 1).padStart(2, '0')}</span>
+                  <div class="feature-desc">
+                    <p>{feature}</p>
                   </div>
-                  {#if item.title}
-                    <span class="thumbnail-caption">{item.title}</span>
-                  {/if}
-                </button>
+                </div>
               {/each}
+            </div>
+          </section>
+        </Reveal>
+
+        <!-- Section: Dynamic Gallery -->
+        {#if project.gallery && project.gallery.length > 0}
+          <Reveal delay={80}>
+            <section class="details-section">
+              <h2 class="section-title">
+                <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
+                System Gallery
+              </h2>
+              <div class="gallery-layout-grid">
+                {#each project.gallery as item, i}
+                  <button class="gallery-thumbnail-card" onclick={() => openLightbox(item.image)} aria-label="Zoom gallery image">
+                    <div class="thumbnail-aspect-wrapper">
+                      <img src={item.image} alt={item.title || `Screenshot ${i + 1}`} loading="lazy" />
+                      <div class="thumbnail-hover-effect">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                      </div>
+                    </div>
+                    {#if item.title}
+                      <span class="thumbnail-caption">{item.title}</span>
+                    {/if}
+                  </button>
+                {/each}
+              </div>
+            </section>
+          </Reveal>
+        {/if}
+
+        <!-- Section: Challenges -->
+        <Reveal delay={100}>
+          <section class="challenge-alert-card" style="--project-color: {project.color || 'var(--accent-color)'}">
+            <div class="alert-icon-circle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <div class="alert-contents">
+              <h3 class="alert-heading">Technical Challenge</h3>
+              <p class="alert-body">{project.challenges}</p>
             </div>
           </section>
         </Reveal>
       {/if}
 
-      <!-- Section: Challenges -->
-      <Reveal delay={100}>
-        <section class="challenge-alert-card" style="--project-color: {project.color || 'var(--accent-color)'}">
-          <div class="alert-icon-circle">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="12"></line>
-              <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
-          </div>
-          <div class="alert-contents">
-            <h3 class="alert-heading">Technical Challenge</h3>
-            <p class="alert-body">{project.challenges}</p>
-          </div>
-        </section>
-      </Reveal>
+      {#if activeTab === 'architecture'}
+        {#if project.dbSchema}
+          <Reveal>
+            <section class="details-section">
+              <h2 class="section-title">
+                <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
+                Database & Schema
+              </h2>
+              <div class="markdown-container">
+                {@html parseMarkdown(project.dbSchema)}
+              </div>
+            </section>
+          </Reveal>
+        {/if}
+
+        {#if project.routes}
+          <Reveal delay={60}>
+            <section class="details-section">
+              <h2 class="section-title">
+                <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
+                Routes & Endpoints
+              </h2>
+              <div class="markdown-container">
+                {@html parseMarkdown(project.routes)}
+              </div>
+            </section>
+          </Reveal>
+        {/if}
+
+        {#if project.structure}
+          <Reveal delay={120}>
+            <section class="details-section">
+              <h2 class="section-title">
+                <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
+                Project Structure
+              </h2>
+              <div class="markdown-container font-mono">
+                {@html parseMarkdown(project.structure)}
+              </div>
+            </section>
+          </Reveal>
+        {/if}
+      {/if}
+
+      {#if activeTab === 'development'}
+        {#if project.metrics}
+          <Reveal>
+            <section class="details-section">
+              <h2 class="section-title">
+                <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
+                Development Metrics
+              </h2>
+              <div class="metrics-grid">
+                {#each project.metrics as metric}
+                  <div class="metric-card" style="border-left: 3px solid {project.color || 'var(--accent-color)'}">
+                    <span class="metric-val">{metric.value}</span>
+                    <span class="metric-lbl">{metric.label}</span>
+                  </div>
+                {/each}
+              </div>
+            </section>
+          </Reveal>
+        {/if}
+
+        {#if project.whyNot}
+          <Reveal delay={60}>
+            <section class="challenge-alert-card" style="--project-color: {project.color || 'var(--accent-color)'}; margin-top: 1rem;">
+              <div class="alert-icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </div>
+              <div class="alert-contents">
+                <h3 class="alert-heading">Architectural Decision</h3>
+                <p class="alert-body">{project.whyNot}</p>
+              </div>
+            </section>
+          </Reveal>
+        {/if}
+
+        {#if project.workflow}
+          <Reveal delay={120}>
+            <section class="details-section" style="margin-top: 1.5rem;">
+              <h2 class="section-title">
+                <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
+                Workflow & Methodology
+              </h2>
+              <div class="markdown-container">
+                {@html parseMarkdown(project.workflow)}
+              </div>
+            </section>
+          </Reveal>
+        {/if}
+
+        {#if project.security}
+          <Reveal delay={180}>
+            <section class="details-section" style="margin-top: 1.5rem;">
+              <h2 class="section-title">
+                <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
+                Security & Authentication
+              </h2>
+              <div class="markdown-container">
+                {@html parseMarkdown(project.security)}
+              </div>
+            </section>
+          </Reveal>
+        {/if}
+      {/if}
+
+      {#if activeTab === 'ecosystem'}
+        {#if project.extraDetails}
+          {#each project.extraDetails as detail, i}
+            <Reveal delay={i * 60}>
+              <section class="details-section">
+                <h2 class="section-title">
+                  <span class="title-glow" style="background: {project.color || 'var(--accent-color)'}"></span>
+                  {detail.title}
+                </h2>
+                <div class="markdown-container">
+                  {@html parseMarkdown(detail.content)}
+                </div>
+              </section>
+            </Reveal>
+          {/each}
+        {/if}
+      {/if}
 
     </main>
 
@@ -430,6 +711,195 @@
 </article>
 
 <style>
+  /* Tabs Navigation Styling */
+  .tabs-nav-container {
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 20;
+  }
+
+  .tabs-nav {
+    display: flex;
+    gap: 1.75rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 0.75rem 0.25rem 1rem;
+    border-bottom: 2px solid transparent;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    white-space: nowrap;
+    outline: none;
+  }
+
+  .tab-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .tab-btn.active {
+    color: var(--accent-color);
+    font-weight: 600;
+    border-bottom-color: var(--accent-color);
+  }
+
+  /* Metrics Grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .metric-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    transition: all 0.2s ease;
+  }
+
+  .metric-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .metric-val {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+
+  .metric-lbl {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Markdown Parser Styling */
+  :global(.markdown-container) {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  :global(.markdown-container.font-mono) {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  :global(.markdown-h3) {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-left: 2px solid var(--accent-color);
+    padding-left: 0.625rem;
+  }
+
+  :global(.markdown-h4) {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 1.25rem;
+    margin-bottom: 0.375rem;
+  }
+
+  :global(.markdown-p) {
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.markdown-ul) {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  :global(.markdown-li) {
+    color: var(--text-secondary);
+  }
+
+  :global(.markdown-inline-code) {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.8125rem;
+    font-family: var(--font-mono);
+    border: 1px solid var(--border);
+  }
+
+  :global(.markdown-code) {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 0.625rem;
+    padding: 1.125rem 1.25rem;
+    overflow-x: auto;
+    margin-bottom: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+  }
+
+  :global(.markdown-code code) {
+    font-family: inherit;
+    color: inherit;
+  }
+
+  :global(.markdown-table-row) {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 0.5rem;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  :global(.markdown-table-row:first-of-type) {
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    border-radius: 0.375rem 0.375rem 0 0;
+  }
+
+  :global(.markdown-table-cell) {
+    font-size: 0.875rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  :global(.markdown-spacer) {
+    height: 0.5rem;
+  }
+
   /* Base page structure */
   .page-container {
     padding: 2.5rem 0 6rem;
