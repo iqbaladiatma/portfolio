@@ -984,19 +984,7 @@
     transform: scale(1.04);
   }
 
-  :global(.project-placeholder) {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, color-mix(in srgb, var(--c) 12%, var(--bg-secondary)), color-mix(in srgb, var(--c) 4%, var(--bg-secondary)));
-    position: relative;
-  }
 
-  :global(.project-placeholder::after) {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 30% 50%, color-mix(in srgb, var(--c) 20%, transparent), transparent 60%);
-  }
 
   .project-content {
     padding: 1.25rem;

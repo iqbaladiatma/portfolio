@@ -44,7 +44,7 @@ async function run() {
       try {
         // Kita gunakan file backup sebagai sumber agar jika dijalankan berulang kali,
         // gambar tidak mengalami kompresi ganda (kualitas tetap terjaga dari sumber asli).
-        let pipeline = sharp(backupPath).resize({ width: 1920, withoutEnlargement: true });
+        let pipeline = sharp(backupPath).rotate().resize({ width: 1920, withoutEnlargement: true });
         
         if (ext === '.jpg' || ext === '.jpeg') {
           pipeline = pipeline.jpeg({ quality: 82, progressive: true });

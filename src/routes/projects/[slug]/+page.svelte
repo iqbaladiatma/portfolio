@@ -2,10 +2,10 @@
   import Reveal from '$lib/components/ui/Reveal.svelte';
   import type { PageData } from './$types';
 
-  let { data }: { data: PageData } = $props();
-  const project = $derived(data.project);
-  const prev = $derived(data.prev);
-  const next = $derived(data.next);
+  let props: { data: PageData } = $props();
+  const project = $derived(props.data.project);
+  const prev = $derived(props.data.prev);
+  const next = $derived(props.data.next);
 
   const statusColor: Record<string, string> = {
     'Live': '#10b981',

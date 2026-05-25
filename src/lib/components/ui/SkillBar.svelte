@@ -5,7 +5,7 @@
     category?: string;
   }
 
-  let { name, level, category = 'General' }: Props = $props();
+  let props: Props = $props();
 
   // Color mapping based on category to give rich visual harmony
   const categoryColors: Record<string, string> = {
@@ -20,7 +20,7 @@
     'General': 'var(--accent-color)'
   };
 
-  const color = $derived(categoryColors[category] || 'var(--accent-color)');
+  const color = $derived(categoryColors[props.category || 'General'] || 'var(--accent-color)');
 
   // Determine visual level tag
   const getLevelLabel = (lvl: number) => {
@@ -35,26 +35,26 @@
   
   <div class="card-header">
     <div class="tech-icon-circle">
-      <span class="tech-letter">{name.charAt(0)}</span>
+      <span class="tech-letter">{props.name.charAt(0)}</span>
     </div>
     
     <div class="tech-info">
-      <span class="skill-name">{name}</span>
-      <span class="category-tag">{category}</span>
+      <span class="skill-name">{props.name}</span>
+      <span class="category-tag">{props.category || 'General'}</span>
     </div>
 
     <span class="level-badge">
-      {getLevelLabel(level)}
+      {getLevelLabel(props.level)}
     </span>
   </div>
 
   <div class="progress-section">
     <div class="progress-meta">
-      <span class="progress-pct">{level}%</span>
+      <span class="progress-pct">{props.level}%</span>
     </div>
-    <div class="skill-bar" role="progressbar" aria-valuenow={level} aria-valuemin={0} aria-valuemax={100} aria-label={`${name} proficiency`}>
-      <div class="skill-fill" style="width: {level}%"></div>
-      <div class="skill-glow-tip" style="left: {level}%"></div>
+    <div class="skill-bar" role="progressbar" aria-valuenow={props.level} aria-valuemin={0} aria-valuemax={100} aria-label={`${props.name} proficiency`}>
+      <div class="skill-fill" style="width: {props.level}%"></div>
+      <div class="skill-glow-tip" style="left: {props.level}%"></div>
     </div>
   </div>
 </div>

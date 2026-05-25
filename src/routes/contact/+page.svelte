@@ -476,7 +476,7 @@
     border-radius: 0.75rem;
   }
 
-  :global([data-theme="dark"]) .availability-card {
+  :global([data-theme="dark"] .availability-card) {
     background: rgba(74, 222, 128, 0.06);
     border-color: rgba(74, 222, 128, 0.15);
   }
@@ -490,7 +490,7 @@
     animation: pulse 2s infinite;
   }
 
-  :global([data-theme="dark"]) .avail-dot {
+  :global([data-theme="dark"] .avail-dot) {
     background: #4ade80;
   }
 
@@ -506,7 +506,7 @@
     color: #16a34a;
   }
 
-  :global([data-theme="dark"]) .avail-title {
+  :global([data-theme="dark"] .avail-title) {
     color: #4ade80;
   }
 

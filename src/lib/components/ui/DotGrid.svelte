@@ -6,15 +6,19 @@
     gap?: number;
     opacity?: number;
   }
-  let { cols = 12, rows = 8, size = 1.5, gap = 24, opacity = 0.35 }: Props = $props();
+  let props: Props = $props();
+
+  const cols = $derived(props.cols ?? 12);
+  const rows = $derived(props.rows ?? 8);
+  const size = $derived(props.size ?? 1.5);
+  const gap = $derived(props.gap ?? 24);
+  const opacity = $derived(props.opacity ?? 0.35);
 
   const w = $derived(cols * gap);
   const h = $derived(rows * gap);
-  // ID unik agar pattern tidak konflik kalau ada beberapa DotGrid
   const id = `dg-${Math.random().toString(36).slice(2, 7)}`;
 </script>
 
-<!-- Satu <pattern> jauh lebih ringan dari ratusan <circle> individual -->
 <svg
   class="dot-grid"
   width={w}
