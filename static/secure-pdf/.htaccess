@@ -1,0 +1,2 @@
+# Mencegah akses langsung ke file PDF
+Deny from all
