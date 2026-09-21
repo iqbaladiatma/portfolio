@@ -232,10 +232,121 @@
     </div>
   </section>
 
+  <section class="section methodology" id="methodology" aria-labelledby="methodology-title">
+    <Reveal>
+      <div class="section-heading methodology-heading">
+        <p class="section-index">06 / Methodology</p>
+        <h2 id="methodology-title">Research Methodology Overview</h2>
+        <p>HISSA began as an engineering problem: how can fragmented financial information be transformed into structured, explainable, and useful decision support?</p>
+        <p>As the system evolved, engineering challenges increasingly became research questions involving data reliability, human validation, Sharia screening, financial analytics, and machine-assisted analysis.</p>
+      </div>
+    </Reveal>
+
+    <Reveal>
+      <div class="methodology-pipeline" aria-label="Seven-stage HISSA research methodology">
+        {#each content.methodology.stages as stage, i}
+          <div class="pipeline-stage">
+            <span>{String(i + 1).padStart(2, '0')}</span>
+            <p>{stage}</p>
+          </div>
+        {/each}
+      </div>
+    </Reveal>
+
+    <div class="evidence-grid">
+      <Reveal>
+        <article class="method-block sources-block">
+          <p class="method-label">Evidence</p>
+          <h3>Data Sources &amp; Evidence</h3>
+          <p>HISSA works across public and structured evidence categories while attempting to preserve traceability between derived information and its source.</p>
+          <ul>
+            {#each content.methodology.sourceCategories as source}<li>{source}</li>{/each}
+          </ul>
+          <div class="trace-line" aria-label="Evidence traceability principle">
+            <span>Source</span><i aria-hidden="true"></i><span>Transformation</span><i aria-hidden="true"></i><span>Validation</span><i aria-hidden="true"></i><span>Analysis</span>
+          </div>
+        </article>
+      </Reveal>
+
+      <Reveal delay={80}>
+        <article class="method-block screening-block">
+          <p class="method-label">Framework</p>
+          <h3>Sharia Screening Framework</h3>
+          <p>HISSA evaluates securities in the context of Indonesian Sharia capital-market principles and relevant regulatory criteria.</p>
+          <div class="screening-list">
+            {#each content.methodology.screening as item, i}
+              <div><span>{String(i + 1).padStart(2, '0')}</span><section><h4>{item.title}</h4><p>{item.body}</p></section></div>
+            {/each}
+          </div>
+          <p class="method-note">Screening criteria may evolve as regulations, source data, and methodological interpretations change.</p>
+        </article>
+      </Reveal>
+    </div>
+
+    <Reveal>
+      <article class="human-review">
+        <div class="human-review-intro">
+          <p class="method-label">Research principle</p>
+          <h3>Human-in-the-Loop Validation</h3>
+          <p>HISSA does not assume that every financial-data problem should be fully automated.</p>
+        </div>
+        <div class="responsibility-pair">
+          <section>
+            <span>Machine</span>
+            <ul>{#each content.methodology.machineTasks as task}<li>{task}</li>{/each}</ul>
+          </section>
+          <section>
+            <span>Human</span>
+            <ul>{#each content.methodology.humanTasks as task}<li>{task}</li>{/each}</ul>
+          </section>
+        </div>
+        <blockquote>Automation should reduce repetitive work without removing human judgment where ambiguity, financial interpretation, or methodological uncertainty remains.</blockquote>
+      </article>
+    </Reveal>
+
+    <div class="analysis-layout">
+      <Reveal>
+        <div class="analysis-intro">
+          <p class="method-label">Interpretation</p>
+          <h3>Analytical Framework</h3>
+          <p>Analysis is treated as a set of connected layers rather than one opaque score. Each layer adds context while preserving a role for uncertainty and review.</p>
+        </div>
+      </Reveal>
+      <ol class="analysis-layers">
+        {#each content.methodology.analyticalLayers as layer, i}
+          <li><span>{String(i + 1).padStart(2, '0')}</span><p>{layer}</p></li>
+        {/each}
+      </ol>
+    </div>
+
+    <Reveal>
+      <div class="evolution" aria-labelledby="evolution-title">
+        <div>
+          <p class="method-label">Ongoing work</p>
+          <h3 id="evolution-title">From a working product toward a research direction</h3>
+          <p>This progression describes how the questions have evolved. It is not a claim that HISSA is already an academically validated research system.</p>
+        </div>
+        <ol>
+          {#each content.methodology.evolution as stage, i}<li><span>{String(i + 1).padStart(2, '0')}</span><p>{stage}</p></li>{/each}
+        </ol>
+      </div>
+    </Reveal>
+
+    <Reveal>
+      <aside class="limitations" aria-labelledby="limitations-title">
+        <div>
+          <p class="method-label">Scope</p>
+          <h3 id="limitations-title">Limitations &amp; Research Boundaries</h3>
+        </div>
+        <ul>{#each content.methodology.limitations as limitation}<li>{limitation}</li>{/each}</ul>
+      </aside>
+    </Reveal>
+  </section>
+
   <section class="section publications" aria-labelledby="publications-title">
     <Reveal>
       <div class="section-heading compact">
-        <p class="section-index">06 / Selected research</p>
+        <p class="section-index">07 / Selected research</p>
         <h2 id="publications-title">Research shaped by building</h2>
       </div>
     </Reveal>
@@ -265,7 +376,7 @@
     <Reveal>
       <div class="direction-layout">
         <div class="direction-copy">
-          <p class="section-index">07 / Research direction</p>
+          <p class="section-index">08 / Research direction</p>
           <h2 id="direction-title">What I want to understand next</h2>
           <blockquote>How can we build intelligent systems that are technically capable while remaining useful, understandable, and responsible for the humans who use them?</blockquote>
         </div>
@@ -282,7 +393,7 @@
   <section class="section technical" aria-labelledby="technical-title">
     <Reveal>
       <div class="section-heading compact">
-        <p class="section-index">08 / Technical overview</p>
+        <p class="section-index">09 / Technical overview</p>
         <h2 id="technical-title">The technology, at a deliberate distance</h2>
         <p>Enough context to show the working domains, without publishing production architecture or proprietary methods.</p>
       </div>
@@ -304,7 +415,7 @@
           <img src="/hissa/iqbal.webp" alt="Portrait of Iqbal Muhammad Adiatma" width="856" height="1280" loading="lazy" />
         </div>
         <div class="about-copy">
-          <p class="section-index">09 / About Iqbal</p>
+          <p class="section-index">10 / About Iqbal</p>
           <h2 id="about-title">Student, builder, and researcher from Indonesia</h2>
           <p>I'm Iqbal Muhammad Adiatma, a final-year Software Engineering student from Indonesia.</p>
           <p>I enjoy building systems around real problems involving data, automation, financial technology, and human decision-making.</p>
@@ -473,6 +584,55 @@
   .question-list span { color: var(--hissa-blue); font: 600 0.78rem var(--font-mono); padding-top: 7px; }
   .question-list p { max-width: 890px; color: var(--hissa-text); font-size: clamp(1.25rem, 2.3vw, 1.8rem); line-height: 1.45; letter-spacing: -0.02em; }
 
+  .methodology { position: relative; }
+  .methodology-heading { max-width: 900px; }
+  .methodology-heading .section-index, .method-label { color: var(--hissa-blue); }
+  .methodology-heading > p:last-child { margin-top: 10px; }
+  .method-label { font: 700 0.68rem/1.4 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+  .methodology h3 { margin-top: 10px; font-size: clamp(1.45rem, 2.6vw, 2.15rem); letter-spacing: -0.025em; }
+  .methodology-pipeline { display: grid; grid-template-columns: repeat(7, 1fr); margin: 12px 0 88px; border-block: 1px solid rgba(56, 189, 248, 0.25); }
+  .pipeline-stage { position: relative; min-width: 0; padding: 24px 18px 28px; }
+  .pipeline-stage:not(:last-child) { border-right: 1px solid rgba(56, 189, 248, 0.18); }
+  .pipeline-stage:not(:last-child)::after { content: ''; position: absolute; top: 31px; right: -4px; width: 7px; height: 7px; transform: rotate(45deg); border-top: 1px solid var(--hissa-blue); border-right: 1px solid var(--hissa-blue); background: var(--hissa-bg); z-index: 1; }
+  .pipeline-stage > span, .analysis-layers span, .evolution li span { color: var(--hissa-blue); font: 650 0.7rem var(--font-mono); }
+  .pipeline-stage p { margin-top: 28px; color: var(--hissa-text); font-size: 0.82rem; line-height: 1.5; }
+  .evidence-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 18px; align-items: start; }
+  .method-block { min-height: 100%; padding: 34px; border: 1px solid var(--hissa-border); border-radius: 16px; background: var(--hissa-card); }
+  .method-block > p:not(.method-label, .method-note) { margin-top: 16px; color: var(--hissa-secondary); line-height: 1.7; }
+  .sources-block > ul { margin-top: 30px; border-top: 1px solid var(--hissa-border); }
+  .sources-block > ul li { padding: 13px 0; border-bottom: 1px solid var(--hissa-border); color: var(--hissa-secondary); font-size: 0.87rem; }
+  .trace-line { display: flex; align-items: center; gap: 8px; margin-top: 34px; color: var(--hissa-text); font: 650 0.63rem var(--font-mono); }
+  .trace-line i { flex: 1; min-width: 8px; height: 1px; background: rgba(56, 189, 248, 0.45); }
+  .screening-list { margin-top: 28px; }
+  .screening-list > div { display: grid; grid-template-columns: 40px 1fr; gap: 14px; padding: 20px 0; border-top: 1px solid var(--hissa-border); }
+  .screening-list > div > span { color: var(--hissa-blue); font: 650 0.68rem var(--font-mono); padding-top: 4px; }
+  .screening-list h4 { color: var(--hissa-text); font-size: 0.9rem; }
+  .screening-list section p { margin-top: 7px; color: var(--hissa-secondary); font-size: 0.84rem; line-height: 1.65; }
+  .method-note { margin-top: 12px; padding-top: 18px; border-top: 1px solid var(--hissa-border); color: var(--hissa-muted); font-size: 0.76rem; line-height: 1.6; }
+  .human-review { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 56px 72px; margin-top: 86px; padding: 44px; background: var(--hissa-surface); border-block: 1px solid var(--hissa-border); }
+  .human-review-intro > p:last-child, .analysis-intro > p:last-child, .evolution > div > p:last-child { margin-top: 16px; color: var(--hissa-secondary); line-height: 1.7; }
+  .responsibility-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+  .responsibility-pair section > span { color: var(--hissa-blue); font: 700 0.72rem var(--font-mono); text-transform: uppercase; }
+  .responsibility-pair ul { margin-top: 16px; }
+  .responsibility-pair li { padding: 10px 0; border-bottom: 1px solid var(--hissa-border); color: var(--hissa-secondary); font-size: 0.85rem; }
+  .human-review blockquote { grid-column: 1 / -1; max-width: 930px; padding-left: 22px; border-left: 2px solid var(--hissa-blue); color: var(--hissa-text); font-size: clamp(1.05rem, 2vw, 1.35rem); line-height: 1.65; }
+  .analysis-layout { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 88px; margin-top: 100px; align-items: start; }
+  .analysis-intro { position: sticky; top: 36px; }
+  .analysis-layers { border-top: 1px solid rgba(56, 189, 248, 0.3); }
+  .analysis-layers li { display: grid; grid-template-columns: 60px 1fr; gap: 18px; align-items: center; min-height: 78px; border-bottom: 1px solid var(--hissa-border); }
+  .analysis-layers p { color: var(--hissa-text); font-size: clamp(1rem, 2vw, 1.25rem); }
+  .evolution { margin-top: 104px; }
+  .evolution > div { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; }
+  .evolution > div > p:last-child { margin-top: 0; }
+  .evolution ol { display: grid; grid-template-columns: repeat(5, 1fr); margin-top: 38px; border-top: 1px solid rgba(56, 189, 248, 0.3); }
+  .evolution li { position: relative; padding: 26px 18px 0 0; }
+  .evolution li:not(:last-child)::after { content: ''; position: absolute; top: -4px; right: 18px; width: 7px; height: 7px; border-radius: 50%; background: var(--hissa-blue); }
+  .evolution li p { margin-top: 17px; color: var(--hissa-secondary); font-size: 0.8rem; line-height: 1.55; }
+  .limitations { display: grid; grid-template-columns: 0.72fr 1.28fr; gap: 64px; margin-top: 100px; padding: 34px 0; border-block: 1px solid var(--hissa-border); }
+  .limitations h3 { font-size: 1.45rem; }
+  .limitations ul { display: grid; grid-template-columns: 1fr 1fr; gap: 0 30px; }
+  .limitations li { padding: 10px 0; color: var(--hissa-secondary); font-size: 0.82rem; line-height: 1.55; }
+
   .publication-list { display: grid; gap: 18px; }
   .publication-card { display: grid; grid-template-columns: 240px 1fr; gap: 50px; padding: 34px; border: 1px solid var(--hissa-border); border-radius: 16px; background: var(--hissa-card); }
   .publication-meta > span { display: inline-block; padding: 5px 9px; border-radius: 6px; background: rgba(56, 189, 248, 0.1); color: var(--hissa-blue); font: 700 0.67rem var(--font-mono); text-transform: uppercase; }
@@ -522,6 +682,13 @@
     .role { width: 100%; }
     .role-grid, .direction-layout { gap: 56px; }
     .stack-grid { grid-template-columns: repeat(2, 1fr); }
+    .methodology-pipeline { grid-template-columns: repeat(4, 1fr); }
+    .pipeline-stage { border-bottom: 1px solid rgba(56, 189, 248, 0.18); }
+    .pipeline-stage:nth-child(4) { border-right: 0; }
+    .pipeline-stage:nth-child(4)::after { display: none; }
+    .pipeline-stage:nth-child(n + 5) { border-bottom: 0; }
+    .evidence-grid { grid-template-columns: 1fr; }
+    .human-review, .analysis-layout { gap: 48px; }
   }
 
   @media (max-width: 767px) {
@@ -550,6 +717,29 @@
     .wireframe-view figcaption span { text-align: left; }
     .research-inner { padding-block: 80px; }
     .question-list li :global(.reveal) { grid-template-columns: 42px 1fr; gap: 10px; padding: 28px 0; }
+    .methodology-pipeline { grid-template-columns: 1fr; margin-bottom: 62px; border-block: 1px solid rgba(56, 189, 248, 0.25); }
+    .pipeline-stage { display: grid; grid-template-columns: 42px 1fr; gap: 12px; align-items: center; padding: 18px 0; border-right: 0 !important; border-bottom: 1px solid rgba(56, 189, 248, 0.18) !important; }
+    .pipeline-stage:last-child { border-bottom: 0 !important; }
+    .pipeline-stage:not(:last-child)::after { top: auto; right: auto; bottom: -4px; left: 18px; transform: rotate(135deg); }
+    .pipeline-stage p { margin-top: 0; font-size: 0.9rem; }
+    .method-block { padding: 24px 20px; }
+    .trace-line { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 8px 14px; align-items: center; }
+    .trace-line i { width: 1px; min-width: 1px; height: 18px; justify-self: center; }
+    .trace-line i:nth-of-type(2) { grid-column: 2; }
+    .trace-line span { text-align: center; }
+    .human-review, .analysis-layout, .limitations { grid-template-columns: 1fr; }
+    .human-review { margin-top: 62px; padding: 30px 20px; gap: 38px; }
+    .responsibility-pair { gap: 20px; }
+    .analysis-layout { margin-top: 72px; gap: 32px; }
+    .analysis-intro { position: static; }
+    .evolution { margin-top: 76px; }
+    .evolution > div { grid-template-columns: 1fr; gap: 4px; }
+    .evolution ol { grid-template-columns: 1fr; margin-top: 28px; border-top: 0; border-left: 1px solid rgba(56, 189, 248, 0.3); }
+    .evolution li { display: grid; grid-template-columns: 38px 1fr; gap: 10px; padding: 14px 0 14px 18px; }
+    .evolution li:not(:last-child)::after { top: auto; right: auto; bottom: -4px; left: -4px; }
+    .evolution li p { margin-top: 0; }
+    .limitations { gap: 22px; margin-top: 72px; }
+    .limitations ul { grid-template-columns: 1fr; }
     .publication-card { padding: 24px; }
     .research-map { min-height: auto; display: flex; flex-wrap: wrap; gap: 8px; }
     .research-map::before { display: none; }

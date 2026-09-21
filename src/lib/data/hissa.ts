@@ -67,10 +67,84 @@ export const hissaCaseStudy = {
   questions: [
     'How should financial information be collected when the source environment is difficult to automate reliably?',
     'Which parts of a financial-data pipeline should remain human-validated?',
+    'How can Sharia screening remain transparent and traceable as source data changes?',
     'How can machine-learning systems support financial analysis without hiding uncertainty from users?',
     'How should intelligent systems balance automation, explainability, and human judgment?',
     'How can financial information systems transform fragmented data into useful decision-support tools?'
   ],
+  methodology: {
+    stages: [
+      'Financial Data Sources',
+      'Data Collection & Normalization',
+      'Validation & Human Review',
+      'Sharia Screening',
+      'Financial & Market Analysis',
+      'Machine-Assisted Analysis',
+      'Explainable Decision Support'
+    ],
+    sourceCategories: [
+      'Official market and issuer disclosures',
+      'Company financial statements',
+      'Structured market data',
+      'Publicly available regulatory information',
+      'Internally normalized financial datasets'
+    ],
+    screening: [
+      {
+        title: 'Business Activity Screening',
+        body: "Reviewing whether a company's primary activities are compatible with applicable Sharia principles."
+      },
+      {
+        title: 'Financial Ratio Screening',
+        body: 'Evaluating relevant financial ratios against applicable Sharia screening criteria without treating one ratio as the whole assessment.'
+      },
+      {
+        title: 'Regulatory / Reference Status',
+        body: 'Consulting relevant official or authoritative Sharia securities references where applicable.'
+      },
+      {
+        title: 'Validation',
+        body: 'Keeping screening results traceable and reviewable instead of presenting an unexplained binary output.'
+      }
+    ],
+    machineTasks: [
+      'Extraction',
+      'Normalization',
+      'Repetitive processing',
+      'Anomaly flagging',
+      'Preliminary analysis'
+    ],
+    humanTasks: [
+      'Ambiguous-data review',
+      'Validation',
+      'Contextual interpretation',
+      'Exception handling',
+      'Methodological oversight'
+    ],
+    analyticalLayers: [
+      'Data Integrity',
+      'Sharia Eligibility',
+      'Fundamental Context',
+      'Market Behaviour',
+      'Quantitative / Machine-Assisted Signals',
+      'Human Interpretation'
+    ],
+    evolution: [
+      'Software Project',
+      'Data System',
+      'Analytical Platform',
+      'Research Questions',
+      'Research-Oriented Financial Information System'
+    ],
+    limitations: [
+      'Financial data can contain missing or inconsistent information.',
+      'Source formats and availability can change over time.',
+      'Sharia screening depends on regulatory criteria and available disclosures.',
+      'Machine-learning outputs are probabilistic rather than certain.',
+      'Historical patterns do not guarantee future market behaviour.',
+      'Automated analysis does not replace professional financial judgment.'
+    ]
+  },
   publications: [
     {
       title: 'Design of Human-in-the-Loop Semi-Automated Pipelines for Financial Data Aggregation in Restricted Web Environments',
